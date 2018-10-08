@@ -74,6 +74,7 @@ func submit(w http.ResponseWriter, r *http.Request) {
 }
 
 //  FRONTEND with Angular: https://auth0.com/blog/developing-golang-and-angular-apps-part-2-angular-front-end/
+// https://www.packtpub.com/mapt/book/web_development/9781788394185/3/ch03lvl1sec27/gopherjs-examples
 
 // https://docs.emmet.io/cheat-sheet/
 // https://github.com/Jcharis/Machine-Learning-Web-Apps/tree/master/Iris-Species-Predictor-ML-Flask-App-With-Materialize.css

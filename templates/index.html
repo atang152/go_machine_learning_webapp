@@ -13,12 +13,13 @@
 	<link rel="stylesheet" href="../static/css/css_reset.css">
 	<link rel="stylesheet" href="../static/css/main.css">
 
+	<!-- App JS -->
+	<script src="../static/js/index.js"></script>
+
 	<!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Numeric JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
-    <!-- App JS -->
-    <script src="../static/js/app.js"></script>
 
 </head>
 
@@ -60,8 +61,9 @@
 			<input type="Submit" value="Train model">
 		</form>
 
-		<section id="result__training"> The accuracy is {{.}} </section>
 	</section>
+
+	<section class="result__training"> The accuracy is {{.}} </section>
 
 	<!-- PLOTTING GRAPH
 
@@ -80,17 +82,17 @@
 </script> -->
 
 <!-- <script>
-function myfunc() {
-	var test = document.getElementbyId("result__training");
-    if (test.style.display === "none") {
-        test.style.display = "block";
-    } else {
-        test.style.display = "none";
-    }
-}
+
+	document.querySelector('input[type=submit]').addEventListener('click', function(){
+    console.log("It works")
+    document.querySelector('.result__training').classList.toggle('active');
+	});
+
 </script> -->
 
 </body>
 </html>
 
 <!-- https://freefrontend.com/css-input-text/ -->
+
+<!-- https://stackoverflow.com/questions/21617060/content-disappears-immediately-after-form-submitted-and-function-runs -->
