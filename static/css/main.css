@@ -1,0 +1,213 @@
+html, body {
+	font-family: 'Cantarell', sans-seif;
+	color: #4a4a4a;
+	width: 100%;
+	margin: 0;
+	height: 100%;
+	background-color: #f0f0f0;
+}
+
+/* ------------------------------------------- */
+/* HEADER AND NAVIGATION
+/* ------------------------------------------- */
+/* Header at the top to hold navigation */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    /* FORMATTING */
+    background-color: white;
+    /*border: 2px solid hotpink;*/
+}
+
+/*Seperate the left texts from the HOME menu */
+header div,
+header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    /* FORMATTING */
+    border-bottom: 2px solid gainsboro;
+}
+
+header div {
+	font-size: 0.8rem;
+
+    /* DEBUG */
+    /*background-color: red;*/
+    /*border: 1px solid hotpink;*/
+}
+
+/* HOME */
+header nav {
+	width: 20vw;
+	font-size: 1.2rem;
+	justify-content: center;
+	border-bottom: 2px solid crimson;
+
+	 /*border: 2px solid hotpink;*/
+}
+
+/* ------------------------------------------- */
+/* TITLE
+/* ------------------------------------------- */
+
+#title {
+    /*LAYOUT*/
+    height: 10vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7vh;
+
+    /*FONT-SIZE*/
+    font-size: 2rem;
+
+    /* BACKGROUND */
+    /*background-color: #5b5b5b;*/
+    /*border: 2px solid hotpink;*/
+}
+
+/* ------------------------------------------- */
+/* CONTENTS WITHIN "TRAIN CLASSIFICATION MODEL (SVM)"
+/* ------------------------------------------- */
+#model__training {
+    /*LAYOUT*/
+    height: 40vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    /*FONT-SIZE*/
+    font-size: 1rem;
+}
+
+/* ------------------------------------------- */
+/* "TRAIN CLASSIFICATION MODEL (SVM)"
+/* ------------------------------------------- */
+#title__training {
+    /*LAYOUT*/
+    height: 5vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vh;
+
+    /*FONT FORMATTING*/
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    /* DEBUG */
+    /*border: 2px solid hotpink;*/
+}
+
+#parameter__training {
+    /*LAYOUT*/
+    height: 60%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+    padding-bottom: 1.0rem;
+
+    /*FONT FORMATTING*/
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+
+    /* DEBUG */
+    /*border: 2px solid #19B698;*/
+}
+
+#placeholder {
+    /*LAYOUT*/
+    text-align: left;
+    /*FONT FORMATTING*/
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1rem;
+    color: silver;
+
+    /* DEBUG */
+    /*border: 2px solid hotpink;*/
+}
+
+.cursor {
+    /*LAYOUT*/
+    width: 100%;
+    padding-right: 1rem;
+    position: relative;
+    border-bottom: 1px solid silver;
+
+    /*FONT FORMATTING*/
+    font-size: 1.0rem;
+
+}
+.cursor i {
+    position: absolute;
+    width: 1px;
+    height: 80%;
+    background-color: darkgray;
+    left: 0px;
+    top: 10%;
+    animation-name: blink;
+    animation-duration: 800ms;
+    animation-iteration-count: infinite;
+    opacity: 1;
+}
+
+.cursor input:focus + i {
+    display: none;
+}
+
+@keyframes blink {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+input[type=submit] {
+    color: dimgray;
+    cursor:pointer;
+    padding:10px 20px;
+    background: gainsboro;
+    border-bottom: 2px solid silver;
+    border-radius: 3px;
+}
+
+#model__training h1 {
+    padding: 1.5rem;
+}
+
+.training_form {
+    /*LAYOUT*/
+    height: 25vh;
+    width: 30vw;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    /* BACKGROUND */
+    background-color: white;
+    border-bottom: 2.5px solid silver;
+    border-radius: 3px;
+    /*border: 2px solid hotpink;*/
+}
+
+

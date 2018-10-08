@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Machine Learning Webapp</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="Hello_World.com" content="Learning about Web Dev, Golang and Machine Learning.">
+
+	<!-- Fontsheet -->
+	<link href="https://fonts.googleapis.com/css?family=Cantarell:400,700|Kotta+One" rel="stylesheet">
+
+	<!-- Style Sheet -->
+	<link rel="stylesheet" href="../static/css/css_reset.css">
+	<link rel="stylesheet" href="../static/css/main.css">
+
+	<!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Numeric JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <!-- App JS -->
+    <script src="../static/js/app.js"></script>
+
+</head>
+
+<body>
+
+	 <!-- HEADERS AND NAVIGATION -->
+	<header>
+		<div>
+			<h4>Data Science Web App with Python & Golang</h1>
+		</div>
+		<nav>
+			<a href="/">
+				<h1>HOME</h1>
+			</a>
+		</nav>
+		<div></div>
+	</header>
+	 <!-- END HEADERS AND NAVIGATION -->
+
+	<section id="title">
+		<h1>Iris Model - Example</h1>
+	</section>
+
+	<section id="model__training">
+		<h2 id="title__training">Train Classification Model (Support Vector Machine)</h2>
+
+		<!-- FORM INPUT PORTION -->
+		<form class="training_form" action="/submit" method="POST" enctype="multipart/form">
+
+			<section id="parameter__training">
+				<h3>Set Parameter for Model Training<h3>
+				<p id="placeholder">C Parameter</p>
+				<div class="cursor">
+					<input type="text" name="C_Parameter" placeholder="">
+					<i></i>
+				</div>
+			</section>
+
+			<input type="Submit" value="Train model">
+		</form>
+
+		<section id="result__training"> The accuracy is {{.}} </section>
+	</section>
+
+	<!-- PLOTTING GRAPH
+
+    <div id="myDiv">
+    Plotly chart will be drawn inside this DIV
+    https://plot.ly/javascript/pie-charts/
+</div>
+<script>
+		var data = [{
+		  values: [19, 26, {{.}}/10.0],
+		  labels: ['Residential', 'Non-Residential', 'Utility'],
+		  type: 'pie'
+		}];
+
+		Plotly.newPlot('myDiv', data);
+</script> -->
+
+<!-- <script>
+function myfunc() {
+	var test = document.getElementbyId("result__training");
+    if (test.style.display === "none") {
+        test.style.display = "block";
+    } else {
+        test.style.display = "none";
+    }
+}
+</script> -->
+
+</body>
+</html>
+
+<!-- https://freefrontend.com/css-input-text/ -->
