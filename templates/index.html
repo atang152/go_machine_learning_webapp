@@ -40,17 +40,17 @@
 		<h1>Iris Model - Example</h1>
 	</section>
 
-	<section id="model__training">
-		<h2 id="title__training">Train Classification Model (Support Vector Machine)</h2>
+	<section class="model__form__input">
+		<h2 class="section__title">Train Classification Model (Support Vector Machine)</h2>
 
 		<!-- FORM INPUT PORTION -->
-		<form class="training_form" action="/submit" method="POST" enctype="multipart/form">
+		<form class="training_form" action="/train" method="POST" enctype="multipart/form">
 
-			<section id="parameter__training">
+			<section class="model__parameter" id="training">
 				<h3>Set Parameter for Model Training<h3>
-				<p id="placeholder">C Parameter</p>
+				<p class="placeholder">C Parameter</p>
 				<div class="cursor">
-					<input id="input_textbox" type="text" name="C_Parameter" placeholder="">
+					<input class="input_textbox" type="text" name="C_Parameter" placeholder="">
 					<i></i>
 				</div>
 			</section>
@@ -61,31 +61,46 @@
 
 	<!-- DISPLAY TRAINING ACCURACY WITH RESULT -->
 	{{if .}}
-		<section class="result__training"> 
+		<section class="result__training">
 			<h2> Training Accuracy</h2>
 			<div class="result"> {{.}} </div>
 			<div class="label_result"> % accuracy </div>
-		</section>  
+		</section>
 	{{end}}
 
-	<section id="model__training">
-	<h2 id="title__training"> Predict Iris Classes </h2>
+	<section class="model__form__input" id="prediction">
+	<h2 class="section__title"> Predict Iris Classes </h2>
 
 	<!-- FORM INPUT PORTION -->
-	<form class="training_form" action="/submit" method="POST" enctype="multipart/form">
+	<form class="training_form" action="/predict" method="POST" enctype="multipart/form">
 
-		<section id="parameter__training">
+		<section class="model__parameter">
 			<h3>Define Iris<h3>
-			<p id="placeholder">C Parameter</p>
-			<div class="cursor">
-				<input id="input_textbox" type="text" name="C_Parameter" placeholder="">
-				<i></i>
-			</div>
+
+				<p class="placeholder" id="sepal_length">Sepal Length</p>
+				<div class="cursor">
+					<input class="input_textbox" type="text" name="sepal_length" placeholder="">
+				</div>
+
+				<p class="placeholder" id="sepal_width">Sepal Width</p>
+				<div class="cursor">
+					<input class="input_textbox" type="text" name="sepal_width" placeholder="">
+				</div>
+
+				<p class="placeholder" id="petal_length">Petal Length</p>
+				<div class="cursor">
+					<input class="input_textbox" type="text" name="petal_length" placeholder="">
+				</div>
+
+				<p class="placeholder" id="petal_width">Petal Width</p>
+				<div class="cursor">
+					<input class="input_textbox" type="text" name="petal_width" placeholder="">
+				</div>
 		</section>
 
 		<input type="submit" value="Predict Iris">
 	</form>
-</section>	
+</section>
 
 	<!-- App JS -->
 	<!-- <script src="../static/js/app.js"></script> -->

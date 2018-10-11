@@ -10,9 +10,10 @@ PORT = 8081
 # initialize flask application
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
-	return 'Hello World!'
+    return 'Hello World!'
 
 
 @app.route('/api/train', methods=['POST'])
@@ -58,4 +59,4 @@ if __name__ == '__main__':
     # run web server
     app.run(host=HOST,
             debug=True,  # automatic reloading enabled
-            port=PORT)  
+            port=PORT)

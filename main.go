@@ -8,10 +8,16 @@ import (
 	// "io"
 	// "io/ioutil"
 	"net/http"
+	// "strings"
 )
 
 type Data struct {
 	Accuracy float32 `json:"accuracy"`
+}
+
+type Prediction struct {
+	Name        string  `json:"name"`
+	Probability float32 `json:"value"`
 }
 
 func main() {
@@ -22,7 +28,8 @@ func main() {
 
 	// Handle routing
 	http.HandleFunc("/", index)
-	http.HandleFunc("/submit", submit)
+	http.HandleFunc("/train", train)
+	http.HandleFunc("/predict", predict)
 
 	fmt.Println("Starting server...")
 	http.ListenAndServe(":8080", nil)
@@ -55,7 +62,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	config.TPL.ExecuteTemplate(w, "index.html", nil)
 }
 
-func submit(w http.ResponseWriter, r *http.Request) {
+func train(w http.ResponseWriter, r *http.Request) {
 
 	// AJAX
 	/*	d1 := Data{}
@@ -95,6 +102,42 @@ func submit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	config.TPL.ExecuteTemplate(w, "index.html", d1.Accuracy)
+}
+
+func predict(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == "POST" {
+		//Form submitted
+
+		prob := []Prediction{}
+		r.ParseForm()
+		for name, value := range r.Form {
+			param := Prediction{name: name, value}
+			fmt.Println("key:", k)
+			fmt.Println("val:", strings.Join(v, ""))
+		}
+
+		// sepal_length := r.FormValue("sepal_length")
+		// sepal_width := r.FormValue("sepal_width")
+		// petal_length := r.FormValue("petal_length")
+		// petal_width := r.FormValue("petal_width")
+
+		// fmt.Println(sepal_length, sepal_width, petal_length, petal_width)
+	}
+
+	/*		jsonData := map[string]string{"sepal_length": sepal_length}
+
+		jsonValue, _ := json.Marshal(jsonData)
+
+		res := postJson("http://localhost:8081/api/train", jsonValue)
+		json.NewDecoder(res.Body).Decode(&d1)
+		fmt.Println(d1.Accuracy)
+
+	} else {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	}
+
+	config.TPL.ExecuteTemplate(w, "index.html", d1.Accuracy)*/
 }
 
 //  FRONTEND with Angular: https://auth0.com/blog/developing-golang-and-angular-apps-part-2-angular-front-end/

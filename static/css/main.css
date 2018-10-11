@@ -4,7 +4,7 @@ html, body {
 	width: 100%;
 	margin: 0;
 	height: 100%;
-	background-color: #f0f0f0; 
+	background-color: #f0f0f0;
     /*border: 1px solid hotpink; */
 }
 
@@ -81,7 +81,7 @@ header nav {
 /* ------------------------------------------- */
 /* CONTENTS WITHIN "TRAIN CLASSIFICATION MODEL (SVM)"
 /* ------------------------------------------- */
-#model__training {
+.model__form__input {
     /*LAYOUT*/
     height: 35vh;
     width: 100vw;
@@ -95,10 +95,11 @@ header nav {
     /*border: 2px solid hotpink;*/
 }
 
+
 /* ------------------------------------------- */
-/* TITLE - "TRAIN CLASSIFICATION MODEL (SVM)"
+/* TITLE - "TRAIN CLASSIFICATION MODEL (SVM)/PREDICT IRIS CLASSES"
 /* ------------------------------------------- */
-#title__training {
+.section__title {
     /*LAYOUT*/
     height: 5vh;
     width: 100vw;
@@ -118,7 +119,7 @@ header nav {
 /* ------------------------------------------- */
 /* FORMATTING FOR "SET PARAMETER FOR MODEL TRAINING/C-PARAMETER"
 /* ------------------------------------------- */
-#parameter__training {
+.model__parameter {
     /*LAYOUT*/
     height: 60%;
     width: 100%;
@@ -139,7 +140,7 @@ header nav {
     /*border: 2px solid #19B698;*/
 }
 
-#placeholder {
+.placeholder {
     /*LAYOUT*/
     text-align: left;
     /*FONT FORMATTING*/
@@ -155,7 +156,7 @@ header nav {
 /* ------------------------------------------- */
 /* FORMATTING FOR INPUT BOXES AND BLINKING CURSOR
 /* ------------------------------------------- */
-#input_textbox {
+.input_textbox {
     color:gray;
 }
 
@@ -236,7 +237,7 @@ input[type=submit] {
     margin-top: 2vh;
 
     /*border: 2px solid hotpink;  */
-}  
+}
 
 .result__training h2 {
     /*LAYOUT*/
@@ -248,7 +249,7 @@ input[type=submit] {
     padding: 1vw;
 
     /*border: 2px solid hotpink;  */
-}  
+}
 
 .result__training div {
     /*LAYOUT*/
@@ -259,15 +260,15 @@ input[type=submit] {
     color: gray;
 
     /*border: 2px solid hotpink;  */
-} 
+}
 
 .result__training .label_result {
     /*LAYOUT*/
     font-size: 1.5vw;
     padding: 1vw;
 
-    /*border: 2px solid hotpink;  */  
-} 
+    /*border: 2px solid hotpink;  */
+}
 
 .result__training .result {
     /*LAYOUT*/
@@ -276,5 +277,7 @@ input[type=submit] {
     padding-right: 8vw;
     border-bottom: 3px solid crimson;
 
-    /*border: 2px solid hotpink;  */  
-} 
+    /*border: 2px solid hotpink;  */
+}
+
+
