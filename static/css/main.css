@@ -4,7 +4,8 @@ html, body {
 	width: 100%;
 	margin: 0;
 	height: 100%;
-	background-color: #f0f0f0;
+	background-color: #f0f0f0; 
+    /*border: 1px solid hotpink; */
 }
 
 /* ------------------------------------------- */
@@ -40,7 +41,7 @@ header nav {
 }
 
 header div {
-	font-size: 0.8rem;
+	font-size: 1.0vw;
 
     /* DEBUG */
     /*background-color: red;*/
@@ -50,7 +51,7 @@ header div {
 /* HOME */
 header nav {
 	width: 20vw;
-	font-size: 1.2rem;
+	font-size: 1.5vw;
 	justify-content: center;
 	border-bottom: 2px solid crimson;
 
@@ -62,7 +63,7 @@ header nav {
 /* ------------------------------------------- */
 #title {
     /*LAYOUT*/
-    height: 10vh;
+    height: 18vh;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -70,7 +71,7 @@ header nav {
     margin-top: 7vh;
 
     /*FONT-SIZE*/
-    font-size: 2rem;
+    font-size: 3vw;
 
     /* BACKGROUND */
     /*background-color: #5b5b5b;*/
@@ -82,7 +83,7 @@ header nav {
 /* ------------------------------------------- */
 #model__training {
     /*LAYOUT*/
-    height: 40vh;
+    height: 35vh;
     width: 100vw;
     display: flex;
     flex-flow: column nowrap;
@@ -90,7 +91,8 @@ header nav {
     align-items: center;
 
     /*FONT-SIZE*/
-    font-size: 1rem;
+    font-size: 1.4vw;
+    /*border: 2px solid hotpink;*/
 }
 
 /* ------------------------------------------- */
@@ -106,7 +108,7 @@ header nav {
     margin-bottom: 2vh;
 
     /*FONT FORMATTING*/
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     font-weight: 500;
 
     /* DEBUG */
@@ -129,7 +131,7 @@ header nav {
     padding-bottom: 1.0rem;
 
     /*FONT FORMATTING*/
-    font-size: 1.4rem;
+    font-size: 1.4vw;
     line-height: 1.5rem;
     font-weight: 400;
 
@@ -141,7 +143,7 @@ header nav {
     /*LAYOUT*/
     text-align: left;
     /*FONT FORMATTING*/
-    font-size: 1.1rem;
+    font-size: 1.3vw;
     font-weight: 400;
     line-height: 1rem;
     color: silver;
@@ -153,6 +155,10 @@ header nav {
 /* ------------------------------------------- */
 /* FORMATTING FOR INPUT BOXES AND BLINKING CURSOR
 /* ------------------------------------------- */
+#input_textbox {
+    color:gray;
+}
+
 .cursor {
     /*LAYOUT*/
     width: 100%;
@@ -161,7 +167,7 @@ header nav {
     border-bottom: 1px solid silver;
 
     /*FONT FORMATTING*/
-    font-size: 1.0rem;
+    font-size: 1.3vw;
 
 }
 .cursor i {
@@ -203,8 +209,8 @@ input[type=submit] {
 /* ------------------------------------------- */
 .training_form {
     /*LAYOUT*/
-    height: 25vh;
-    width: 30vw;
+    height: 30vh;
+    width: 40vw;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -218,19 +224,57 @@ input[type=submit] {
 }
 
 /* ------------------------------------------- */
-/* THE REST OF THE MODEL TRAINING FORM
+/* TRAINING RESULTS
 /* ------------------------------------------- */
-/* .result__training {
-   display: none;
-} */
-
-/* .active {
+.result__training {
+    /*LAYOUT*/
+    height: 25vh;
     display: flex;
-    width: 300px;
-    height: 50px;
-    background-color: coral;
-    color: white;
-    font-size: 25px;
-    color: dimgray;
-    background-color: black; }
- */
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vh;
+
+    /*border: 2px solid hotpink;  */
+}  
+
+.result__training h2 {
+    /*LAYOUT*/
+    height: 8vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    font-size: 1.7vw;
+    padding: 1vw;
+
+    /*border: 2px solid hotpink;  */
+}  
+
+.result__training div {
+    /*LAYOUT*/
+    height: 8.5vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    color: gray;
+
+    /*border: 2px solid hotpink;  */
+} 
+
+.result__training .label_result {
+    /*LAYOUT*/
+    font-size: 1.5vw;
+    padding: 1vw;
+
+    /*border: 2px solid hotpink;  */  
+} 
+
+.result__training .result {
+    /*LAYOUT*/
+    font-size: 1.9vw;
+    padding-left: 8vw;
+    padding-right: 8vw;
+    border-bottom: 3px solid crimson;
+
+    /*border: 2px solid hotpink;  */  
+} 

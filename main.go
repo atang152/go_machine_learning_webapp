@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/atang152/go_machine_learning_webapp/config"
+	// "io"
+	// "io/ioutil"
 	"net/http"
 )
 
@@ -15,8 +17,8 @@ type Data struct {
 func main() {
 
 	// Add route to serve css files
-	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
+	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
 
 	// Handle routing
 	http.HandleFunc("/", index)
@@ -55,6 +57,28 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func submit(w http.ResponseWriter, r *http.Request) {
 
+	// AJAX
+	/*	d1 := Data{}
+		if r.Method == "POST" {
+			v, err := ioutil.ReadAll(r.Body)
+
+			if err != nil {
+				fmt.Printf("Error reading response body %s\n", err)
+				panic(err)
+			}
+
+			jsonData := map[string]string{"C_Parameter": string(v)}
+			jsonValue, _ := json.Marshal(jsonData)
+
+			res := postJson("http://localhost:8081/api/train", jsonValue)
+			json.NewDecoder(res.Body).Decode(&d1)
+			fmt.Println(d1.Accuracy)
+		} else {
+			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		}
+
+		fmt.Fprintln(w, d1.Accuracy)*/
+
 	d1 := Data{}
 	if r.Method == "POST" {
 		//Form submitted
@@ -91,3 +115,5 @@ func submit(w http.ResponseWriter, r *http.Request) {
 // }
 
 // fmt.Println(d1.Accuracy)
+
+// https://www.willmaster.com/library/manage-forms/form-disappears-immediately-when-button-is-clicked.php

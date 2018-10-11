@@ -13,13 +13,10 @@
 	<link rel="stylesheet" href="../static/css/css_reset.css">
 	<link rel="stylesheet" href="../static/css/main.css">
 
-	<!-- App JS -->
-	<script src="../static/js/index.js"></script>
-
 	<!-- Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
     <!-- Numeric JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> -->
 
 </head>
 
@@ -53,46 +50,51 @@
 				<h3>Set Parameter for Model Training<h3>
 				<p id="placeholder">C Parameter</p>
 				<div class="cursor">
-					<input type="text" name="C_Parameter" placeholder="">
+					<input id="input_textbox" type="text" name="C_Parameter" placeholder="">
 					<i></i>
 				</div>
 			</section>
 
-			<input type="Submit" value="Train model">
+			<input type="submit" value="Train model">
 		</form>
-
 	</section>
 
-	<section class="result__training"> The accuracy is {{.}} </section>
+	<!-- DISPLAY TRAINING ACCURACY WITH RESULT -->
+	{{if .}}
+		<section class="result__training"> 
+			<h2> Training Accuracy</h2>
+			<div class="result"> {{.}} </div>
+			<div class="label_result"> % accuracy </div>
+		</section>  
+	{{end}}
 
-	<!-- PLOTTING GRAPH
+	<section id="model__training">
+	<h2 id="title__training"> Predict Iris Classes </h2>
 
-    <div id="myDiv">
-    Plotly chart will be drawn inside this DIV
-    https://plot.ly/javascript/pie-charts/
-</div>
-<script>
-		var data = [{
-		  values: [19, 26, {{.}}/10.0],
-		  labels: ['Residential', 'Non-Residential', 'Utility'],
-		  type: 'pie'
-		}];
+	<!-- FORM INPUT PORTION -->
+	<form class="training_form" action="/submit" method="POST" enctype="multipart/form">
 
-		Plotly.newPlot('myDiv', data);
-</script> -->
+		<section id="parameter__training">
+			<h3>Define Iris<h3>
+			<p id="placeholder">C Parameter</p>
+			<div class="cursor">
+				<input id="input_textbox" type="text" name="C_Parameter" placeholder="">
+				<i></i>
+			</div>
+		</section>
 
-<!-- <script>
+		<input type="submit" value="Predict Iris">
+	</form>
+</section>	
 
-	document.querySelector('input[type=submit]').addEventListener('click', function(){
-    console.log("It works")
-    document.querySelector('.result__training').classList.toggle('active');
-	});
-
-</script> -->
+	<!-- App JS -->
+	<!-- <script src="../static/js/app.js"></script> -->
 
 </body>
 </html>
 
 <!-- https://freefrontend.com/css-input-text/ -->
+<!-- https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit -->
+<!-- https://www.formget.com/javascript-onsubmit/ -->
 
 <!-- https://stackoverflow.com/questions/21617060/content-disappears-immediately-after-form-submitted-and-function-runs -->
