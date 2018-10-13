@@ -64,28 +64,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func train(w http.ResponseWriter, r *http.Request) {
 
-	// AJAX
-	/*	d1 := Data{}
-		if r.Method == "POST" {
-			v, err := ioutil.ReadAll(r.Body)
-
-			if err != nil {
-				fmt.Printf("Error reading response body %s\n", err)
-				panic(err)
-			}
-
-			jsonData := map[string]string{"C_Parameter": string(v)}
-			jsonValue, _ := json.Marshal(jsonData)
-
-			res := postJson("http://localhost:8081/api/train", jsonValue)
-			json.NewDecoder(res.Body).Decode(&d1)
-			fmt.Println(d1.Accuracy)
-		} else {
-			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-		}
-
-		fmt.Fprintln(w, d1.Accuracy)*/
-
 	d1 := Data{}
 	if r.Method == "POST" {
 		//Form submitted
@@ -106,39 +84,51 @@ func train(w http.ResponseWriter, r *http.Request) {
 
 func predict(w http.ResponseWriter, r *http.Request) {
 
+	prob := []Prediction{}
 	if r.Method == "POST" {
-		//Form submitted
 
-		prob := []Prediction{}
+		//Form submitted
 		r.ParseForm()
-		for name, value := range r.Form {
-			param := Prediction{name: name, value}
-			fmt.Println("key:", k)
-			fmt.Println("val:", strings.Join(v, ""))
+		jsonData := make(map[string]string)
+
+		for name, _ := range r.Form {
+			jsonData[name] = r.Form.Get(name)
 		}
 
-		// sepal_length := r.FormValue("sepal_length")
-		// sepal_width := r.FormValue("sepal_width")
-		// petal_length := r.FormValue("petal_length")
-		// petal_width := r.FormValue("petal_width")
+		jsonValue, _ := json.Marshal(jsonData)
+		res := postJson("http://localhost:8081/api/predict", jsonValue)
+		json.NewDecoder(res.Body).Decode(&prob)
 
-		// fmt.Println(sepal_length, sepal_width, petal_length, petal_width)
+		fmt.Println(prob)
+	} else {
+
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 	}
 
-	/*		jsonData := map[string]string{"sepal_length": sepal_length}
+	config.TPL.ExecuteTemplate(w, "index.html", prob)
+}
 
+// AJAX
+/*	d1 := Data{}
+	if r.Method == "POST" {
+		v, err := ioutil.ReadAll(r.Body)
+
+		if err != nil {
+			fmt.Printf("Error reading response body %s\n", err)
+			panic(err)
+		}
+
+		jsonData := map[string]string{"C_Parameter": string(v)}
 		jsonValue, _ := json.Marshal(jsonData)
 
 		res := postJson("http://localhost:8081/api/train", jsonValue)
 		json.NewDecoder(res.Body).Decode(&d1)
 		fmt.Println(d1.Accuracy)
-
 	} else {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 	}
 
-	config.TPL.ExecuteTemplate(w, "index.html", d1.Accuracy)*/
-}
+	fmt.Fprintln(w, d1.Accuracy)*/
 
 //  FRONTEND with Angular: https://auth0.com/blog/developing-golang-and-angular-apps-part-2-angular-front-end/
 // https://www.packtpub.com/mapt/book/web_development/9781788394185/3/ch03lvl1sec27/gopherjs-examples
@@ -160,3 +150,4 @@ func predict(w http.ResponseWriter, r *http.Request) {
 // fmt.Println(d1.Accuracy)
 
 // https://www.willmaster.com/library/manage-forms/form-disappears-immediately-when-button-is-clicked.php
+// https://stackoverflow.com/questions/34839811/how-to-retrieve-form-data-as-array-in-golang
