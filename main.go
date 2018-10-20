@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/atang152/go_machine_learning_webapp/config"
 	// "io"
-	// "io/ioutil"
+	"io/ioutil"
 	"net/http"
 	// "strings"
 )
@@ -87,48 +87,85 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	prob := []Prediction{}
 	if r.Method == "POST" {
 
-		//Form submitted
-		r.ParseForm()
-		jsonData := make(map[string]string)
-
-		for name, _ := range r.Form {
-			jsonData[name] = r.Form.Get(name)
-		}
-
-		jsonValue, _ := json.Marshal(jsonData)
-		res := postJson("http://localhost:8081/api/predict", jsonValue)
-		json.NewDecoder(res.Body).Decode(&prob)
-
-		fmt.Println(prob)
-	} else {
-
-		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-	}
-
-	config.TPL.ExecuteTemplate(w, "index.html", prob)
-}
-
-// AJAX
-/*	d1 := Data{}
-	if r.Method == "POST" {
-		v, err := ioutil.ReadAll(r.Body)
-
+		data, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			fmt.Printf("Error reading response body %s\n", err)
 			panic(err)
 		}
 
-		jsonData := map[string]string{"C_Parameter": string(v)}
-		jsonValue, _ := json.Marshal(jsonData)
+		fmt.Println(string(data))
+		res := postJson("http://localhost:8081/api/predict", data)
+		json.NewDecoder(res.Body).Decode(&prob)
 
-		res := postJson("http://localhost:8081/api/train", jsonValue)
-		json.NewDecoder(res.Body).Decode(&d1)
-		fmt.Println(d1.Accuracy)
+		fmt.Println(prob[0].Name)
+		fmt.Println(prob[0].Probability)
+		config.TPL.ExecuteTemplate(w, "batch", prob)
+
 	} else {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 	}
 
-	fmt.Fprintln(w, d1.Accuracy)*/
+}
+
+// ===============================================
+// POST FORM
+// ===============================================
+// func predict(w http.ResponseWriter, r *http.Request) {
+// 	prob := []Prediction{}
+// 	if r.Method == "POST" {
+
+// 		//Form submitted
+// 		r.ParseForm()
+// 		jsonData := make(map[string]string)
+
+// 		for name, _ := range r.Form {
+// 			jsonData[name] = r.Form.Get(name)
+// 		}
+
+// 		jsonValue, _ := json.Marshal(jsonData)
+// 		res := postJson("http://localhost:8081/api/predict", jsonValue)
+// 		json.NewDecoder(res.Body).Decode(&prob)
+
+// 		fmt.Println(prob)
+// 	} else {
+
+// 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+// 	}
+
+// 	config.TPL.ExecuteTemplate(w, "index.html", prob)
+// }
+
+// ===============================================
+// AJAX
+// ===============================================
+// func train(w http.ResponseWriter, r *http.Request) {
+// 	d1 := Data{}
+// 	if r.Method == "POST" {
+// 		v, err := ioutil.ReadAll(r.Body)
+
+// 		if err != nil {
+// 			fmt.Printf("Error reading response body %s\n", err)
+// 			panic(err)
+// 		}
+
+// 		jsonData := map[string]string{"C_Parameter": string(v)}
+// 		jsonValue, _ := json.Marshal(jsonData)
+
+// 		res := postJson("http://localhost:8081/api/train", jsonValue)
+// 		json.NewDecoder(res.Body).Decode(&d1)
+// 		fmt.Println(d1.Accuracy)
+// 	} else {
+// 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+// 	}
+
+// 	fmt.Fprintln(w, d1.Accuracy)
+// }
+// ===============================================
+
+// https://stackoverflow.com/questions/37118281/dynamically-refresh-a-part-of-the-template-when-a-variable-is-updated-golang
+// https://stackoverflow.com/questions/41136000/creating-load-more-button-in-golang-with-templates
+// https://hackernoon.com/golang-template-2-template-composition-and-how-to-organize-template-files-4cb40bcdf8f6
+// https://www.w3schools.com/xml/dom_httprequest.asp
 
 //  FRONTEND with Angular: https://auth0.com/blog/developing-golang-and-angular-apps-part-2-angular-front-end/
 // https://www.packtpub.com/mapt/book/web_development/9781788394185/3/ch03lvl1sec27/gopherjs-examples
@@ -140,14 +177,6 @@ func predict(w http.ResponseWriter, r *http.Request) {
 // https://www.thepolyglotdeveloper.com/2017/07/consume-restful-api-endpoints-golang-application/
 // https://stackoverflow.com/questions/17156371/how-to-get-json-response-in-golang
 // https://blog.alexellis.io/golang-json-api-client/
-
-// d1 := Data{}
-// err := getJson("http://localhost:8081/api/train", &d1)
-// if err != nil {
-// 	fmt.Println(err)
-// }
-
-// fmt.Println(d1.Accuracy)
 
 // https://www.willmaster.com/library/manage-forms/form-disappears-immediately-when-button-is-clicked.php
 // https://stackoverflow.com/questions/34839811/how-to-retrieve-form-data-as-array-in-golang
