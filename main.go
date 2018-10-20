@@ -33,7 +33,6 @@ func main() {
 
 	fmt.Println("Starting server...")
 	http.ListenAndServe(":8080", nil)
-
 }
 
 func getJson(url string, target interface{}) error {
@@ -58,11 +57,62 @@ func postJson(url string, jsonValue []uint8) *http.Response {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-
 	config.TPL.ExecuteTemplate(w, "index.html", nil)
 }
 
 func train(w http.ResponseWriter, r *http.Request) {
+
+	d1 := Data{}
+	if r.Method == "POST" {
+		v, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body %s\n", err)
+			panic(err)
+		}
+		fmt.Println("C_Parameter:", string(v))
+
+		jsonData := map[string]string{"C_Parameter": string(v)}
+		jsonValue, _ := json.Marshal(jsonData)
+
+		res := postJson("http://localhost:8081/api/train", jsonValue)
+		json.NewDecoder(res.Body).Decode(&d1)
+
+		fmt.Println("Accuracy:", d1.Accuracy)
+		config.TPL.ExecuteTemplate(w, "trainingResult", d1.Accuracy)
+	} else {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	}
+}
+
+func predict(w http.ResponseWriter, r *http.Request) {
+
+	prob := []Prediction{}
+	if r.Method == "POST" {
+
+		data, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			fmt.Printf("Error reading response body %s\n", err)
+			panic(err)
+		}
+		fmt.Println("Iris Parameters:", string(data))
+
+		res := postJson("http://localhost:8081/api/predict", data)
+		json.NewDecoder(res.Body).Decode(&prob)
+
+		fmt.Println("Probability:", prob)
+		// fmt.Println(prob[0].Name)
+		// fmt.Println(prob[0].Probability)
+		config.TPL.ExecuteTemplate(w, "predictionResult", prob)
+
+	} else {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	}
+}
+
+// ===============================================
+// POST FORM
+// ===============================================
+/*func train(w http.ResponseWriter, r *http.Request) {
 
 	d1 := Data{}
 	if r.Method == "POST" {
@@ -80,6 +130,58 @@ func train(w http.ResponseWriter, r *http.Request) {
 	}
 
 	config.TPL.ExecuteTemplate(w, "index.html", d1.Accuracy)
+}
+
+func predict(w http.ResponseWriter, r *http.Request) {
+	prob := []Prediction{}
+	if r.Method == "POST" {
+
+		//Form submitted
+		r.ParseForm()
+		jsonData := make(map[string]string)
+
+		for name, _ := range r.Form {
+			jsonData[name] = r.Form.Get(name)
+		}
+
+		jsonValue, _ := json.Marshal(jsonData)
+		res := postJson("http://localhost:8081/api/predict", jsonValue)
+		json.NewDecoder(res.Body).Decode(&prob)
+
+		fmt.Println(prob)
+	} else {
+
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	}
+
+	config.TPL.ExecuteTemplate(w, "index.html", prob)
+}*/
+
+// ===============================================
+// AJAX
+// ===============================================
+/*func train(w http.ResponseWriter, r *http.Request) {
+
+	d1 := Data{}
+	if r.Method == "POST" {
+		v, err := ioutil.ReadAll(r.Body)
+
+		if err != nil {
+			fmt.Printf("Error reading response body %s\n", err)
+			panic(err)
+		}
+
+		jsonData := map[string]string{"C_Parameter": string(v)}
+		jsonValue, _ := json.Marshal(jsonData)
+
+		res := postJson("http://localhost:8081/api/train", jsonValue)
+		json.NewDecoder(res.Body).Decode(&d1)
+
+	} else {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	}
+
+	config.TPL.ExecuteTemplate(w, "test", d1.Accuracy)
 }
 
 func predict(w http.ResponseWriter, r *http.Request) {
@@ -104,62 +206,7 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 	}
-
-}
-
-// ===============================================
-// POST FORM
-// ===============================================
-// func predict(w http.ResponseWriter, r *http.Request) {
-// 	prob := []Prediction{}
-// 	if r.Method == "POST" {
-
-// 		//Form submitted
-// 		r.ParseForm()
-// 		jsonData := make(map[string]string)
-
-// 		for name, _ := range r.Form {
-// 			jsonData[name] = r.Form.Get(name)
-// 		}
-
-// 		jsonValue, _ := json.Marshal(jsonData)
-// 		res := postJson("http://localhost:8081/api/predict", jsonValue)
-// 		json.NewDecoder(res.Body).Decode(&prob)
-
-// 		fmt.Println(prob)
-// 	} else {
-
-// 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-// 	}
-
-// 	config.TPL.ExecuteTemplate(w, "index.html", prob)
-// }
-
-// ===============================================
-// AJAX
-// ===============================================
-// func train(w http.ResponseWriter, r *http.Request) {
-// 	d1 := Data{}
-// 	if r.Method == "POST" {
-// 		v, err := ioutil.ReadAll(r.Body)
-
-// 		if err != nil {
-// 			fmt.Printf("Error reading response body %s\n", err)
-// 			panic(err)
-// 		}
-
-// 		jsonData := map[string]string{"C_Parameter": string(v)}
-// 		jsonValue, _ := json.Marshal(jsonData)
-
-// 		res := postJson("http://localhost:8081/api/train", jsonValue)
-// 		json.NewDecoder(res.Body).Decode(&d1)
-// 		fmt.Println(d1.Accuracy)
-// 	} else {
-// 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-// 	}
-
-// 	fmt.Fprintln(w, d1.Accuracy)
-// }
+}*/
 // ===============================================
 
 // https://stackoverflow.com/questions/37118281/dynamically-refresh-a-part-of-the-template-when-a-variable-is-updated-golang

@@ -17,11 +17,9 @@
     <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
     <!-- Numeric JS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> -->
-
 </head>
 
 <body>
-
 	 <!-- HEADERS AND NAVIGATION -->
 	<header>
 		<div>
@@ -60,12 +58,16 @@
 	</section>
 
 	<!-- DISPLAY TRAINING ACCURACY WITH RESULT -->
-	{{if .}}
-		<section class="result__training">
-			<h2> Training Accuracy</h2>
-			<div class="result"> {{.}} </div>
-			<div class="label_result"> % accuracy </div>
-		</section>
+	{{block "trainingResult" .}}
+		<div id="firstResult">
+			{{if .}}
+			<section class="result__training">
+				<h2> Training Accuracy</h2>
+				<div class="result"> {{.}} </div>
+				<div class="label_result"> % accuracy </div>
+			</section>
+			{{end}}
+		</div>
 	{{end}}
 
 	<section class="model__form__input" id="prediction">
@@ -102,16 +104,35 @@
 		</form>
 	</section>
 
-	{{block "batch" .}}
-		<div id="nextBatch">{{.}}</div>
+	{{block "predictionResult" .}}
+		<div id="secondResult">{{.}}</div>
 	{{end}}
 
 	<script>
-
 		<!-- ================================= -->
 		<!-- DISPLAYING ACCURACY -->
 		<!-- ================================= -->
+		var training_form = document.querySelector('.training_form');
 
+		training_form.addEventListener('submit', function(e){
+
+			e.preventDefault();
+
+			var C_Parameter = e.target[0].value
+			console.log(C_Parameter)
+
+			training_result = document.getElementById('firstResult')
+			var x = new XMLHttpRequest()
+			x.onreadystatechange = function() {
+	            if (x.readyState == 4 && x.status == 200) {
+	                training_result.outerHTML = x.responseText;
+	                // console.log(x.responseText);
+	            };
+        	};
+
+        	x.open("POST", "/train", true);
+        	x.send(C_Parameter);
+		});
 
 		<!-- ================================= -->
 		<!-- CHARTING RESULTS -->
@@ -119,7 +140,7 @@
 	    var form = document.getElementById('prediction_form');
 
 	    form.addEventListener('submit', function(e){
-	        e.preventDefault()
+	        e.preventDefault();
 
 	        var sepalLength = e.target[0].value
 	        var sepalWidth = e.target[1].value
@@ -128,12 +149,12 @@
 
 	        console.log(sepalLength, sepalWidth, petalLength, petalWidth)
 
-	        el = document.getElementById("nextBatch");
+	        el = document.getElementById("secondResult");
 	        var xhr = new XMLHttpRequest()
         	xhr.onreadystatechange = function() {
 	            if (xhr.readyState == 4 && xhr.status == 200) {
 	                el.outerHTML = xhr.responseText;
-	                console.log(xhr.responseText);
+	                // console.log(xhr.responseText);
 	            };
         	};
 
