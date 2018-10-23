@@ -101,7 +101,15 @@ func predict(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Probability:", prob)
 		// fmt.Println(prob[0].Name)
 		// fmt.Println(prob[0].Probability)
+
+		// probJSON, err := json.Marshal(prob)
+		// if err != nil {
+		// 	panic(err)
+		// }
+
+		// fmt.Println(probJSON)
 		config.TPL.ExecuteTemplate(w, "predictionResult", prob)
+		// config.TPL.ExecuteTemplate(w, "predictionResult", probJSON)
 
 	} else {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
@@ -207,6 +215,8 @@ func predict(w http.ResponseWriter, r *http.Request) {
 	}
 }*/
 // ===============================================
+
+// marshalling (converting objects into json) and unmarshalling (converting json into objects)
 
 // https://stackoverflow.com/questions/37118281/dynamically-refresh-a-part-of-the-template-when-a-variable-is-updated-golang
 // https://stackoverflow.com/questions/41136000/creating-load-more-button-in-golang-with-templates

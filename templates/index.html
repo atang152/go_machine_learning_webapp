@@ -15,6 +15,7 @@
 
 	<!-- D3.js -->
 	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<!-- <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script> -->
 
 	<!-- Plotly.js -->
     <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
@@ -111,68 +112,10 @@
 		<div id="secondResult">{{.}}</div>
 	{{end}}
 
-	<script>
-		<!-- ================================= -->
-		<!-- DISPLAYING ACCURACY -->
-		<!-- ================================= -->
-		var training_form = document.querySelector('.training_form');
-
-		training_form.addEventListener('submit', function(e){
-
-			e.preventDefault();
-
-			var C_Parameter = e.target[0].value
-			console.log(C_Parameter)
-
-			training_result = document.getElementById('firstResult')
-			var x = new XMLHttpRequest()
-			x.onreadystatechange = function() {
-	            if (x.readyState == 4 && x.status == 200) {
-	                training_result.outerHTML = x.responseText;
-	                // console.log(x.responseText);
-	            };
-        	};
-
-        	x.open("POST", "/train", true);
-        	x.send(C_Parameter);
-		});
-
-		<!-- ================================= -->
-		<!-- CHARTING RESULTS -->
-		<!-- ================================= -->
-	    var form = document.getElementById('prediction_form');
-
-	    form.addEventListener('submit', function(e){
-	        e.preventDefault();
-
-	        var sepalLength = e.target[0].value
-	        var sepalWidth = e.target[1].value
-	        var petalLength = e.target[2].value
-	        var petalWidth = e.target[3].value
-
-	        console.log(sepalLength, sepalWidth, petalLength, petalWidth)
-
-	        el = document.getElementById("secondResult");
-	        var xhr = new XMLHttpRequest()
-        	xhr.onreadystatechange = function() {
-	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                el.outerHTML = xhr.responseText;
-	                // console.log(xhr.responseText);
-	            };
-        	};
-
-        	xhr.open("POST", "/predict", true)
-        	xhr.send(JSON.stringify({
-        		sepalLength: sepalLength,
-        		sepalWidth: sepalWidth,
-        		petalLength: petalLength,
-        		petalWidth: petalWidth
-        	}));
-	    });
-	</script>
+	<div id="chart"></div>
 
 	<!-- App JS -->
-	<!-- <script src="../static/js/app.js"></script> -->
+	<script src="../static/js/app.js"></script>
 
 </body>
 </html>
