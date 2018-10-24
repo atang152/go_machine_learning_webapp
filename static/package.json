@@ -1,0 +1,15 @@
+{
+  "name": "ml_frontend",
+  "version": "1.0.0",
+  "description": "Machine Learning webapp's frontend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anto Tang",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "eslint": "^5.7.0"
+  }
+}
