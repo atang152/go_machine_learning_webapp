@@ -8,7 +8,7 @@ training_form.addEventListener('submit', function (e) {
 	e.preventDefault();
 
 	var C_Parameter = e.target[0].value
-	console.log(C_Parameter)
+	// console.log(C_Parameter)
 
 	training_result = document.getElementById('firstResult')
 	var x = new XMLHttpRequest()
@@ -36,9 +36,9 @@ form.addEventListener('submit', function (e) {
 	var petalLength = e.target[2].value
 	var petalWidth = e.target[3].value
 
-	console.log(sepalLength, sepalWidth, petalLength, petalWidth)
+	// console.log(sepalLength, sepalWidth, petalLength, petalWidth)
 
-	el = document.getElementById("secondResult");
+	// el = document.getElementById("secondResult");
 	var xhr = new XMLHttpRequest()
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4 && xhr.status == 200) {
@@ -52,9 +52,21 @@ form.addEventListener('submit', function (e) {
 			// <!-- ================================= -->
 			// el.innerHTML = xhr.responseText;
 
-			// Parse JSON response from server and passing it to drawChart
+			// Parse JSON response from server
 			let dataset = JSON.parse(xhr.responseText);
-			drawChart(dataset);
+
+			// chart dimensions
+			var width = 1200;
+			var height = 800;
+
+			// Check if there is data in element g; 
+			// Update chart if it is. Create a new one
+			// by drawing a new pie chart if not
+			if (document.querySelector('g')) {
+				updateChart(dataset, width, height);
+			} else {
+				drawChart(dataset, width, height);
+			}
 		};
 	};
 
@@ -71,14 +83,44 @@ form.addEventListener('submit', function (e) {
 // <!-- PIE CHART --> https://codepen.io/anon/pen/qJMJyL
 // <!-- ================================= -->
 
-const drawChart = function (dataset) {
-	
-	// DATASET
-	// console.log(dataset);
+const updateChart = function (dataset, width, height) {
 
-	// chart dimensions
-	var width = 1200;
-	var height = 800;
+	// var dataset = [
+	// 	{name: "Assamese", value: Math.floor(Math.random() * 10)},
+	// 	{name: "Bengali", value:Math.floor(Math.random() * 10)},
+	// 	{name: "Bodo", value: Math.floor(Math.random() * 10)},
+	//   ];
+
+	// a circle chart needs a radius
+	var radius = Math.min(width, height) / 2;
+
+	var svg = d3.select('#chart')
+	var path = svg.selectAll('path')
+
+	var arc = d3.arc()
+		.innerRadius(0) // none for pie chart
+		.outerRadius(radius); // size of overall chart
+
+	var pie = d3.pie()  // start and end angles of segments
+		.value(function (d) {
+			return d.value; // How to extract numerical data from each entry in our dataset
+		})
+		.sort(null) // by default, data sorts in ascending order which mess with our animation so we set it to null
+
+	path = path.data(pie(dataset)); // update pie with new data
+
+	path.transition() // transition of redrawn pie
+		.duration(750) //
+		.attrTween('d', function (d) { // 'd' specifies the d attribute that we'll be animating
+			var interpolate = d3.interpolate(this._current, d); // this = current path element
+			this._current = interpolate(0); // interpolate between current value and the new value of 'd'
+			return function (t) {
+				return arc(interpolate(t));
+			};
+		});
+}
+
+const drawChart = function (dataset, width, height) {
 
 	// a circle chart needs a radius
 	var radius = Math.min(width, height) / 2;
@@ -91,6 +133,9 @@ const drawChart = function (dataset) {
 	var color = d3.scaleOrdinal(d3.schemePastel2);
 	// https://npm.runkit.com/d3-scale-chromatic
 
+	// ========================
+	// Adding the svg canvas
+	// ========================
 	var svg = d3.select('#chart') // select element in the DOM with id 'chart'
 		.append('svg') // append an svg element to the element we have selected
 		.attr('width', width) // set the width of svg element we just added
@@ -128,14 +173,16 @@ const drawChart = function (dataset) {
 	//   </div>
 	// </div>
 
+	// ========================
 	// creating the chart
+	// ========================
 	var path = svg.selectAll('path') // select all path elements inside the svg. specifically the 'g' element. they don't exist yet but they will be created below
 		.data(pie(dataset)) //associate dataset wit he path elements we're about to create. must pass through the pie function. it magically knows how to extract values and bakes it into the pie
 		.enter() //creates placeholder nodes for each of the values
 		.append('path') // replace placeholders with path elements
 		.attr('d', arc) // define d attribute with arc function above
 		.attr('fill', function (d) { return color(d.data.name); }) // use color scale to define fill of each name in dataset
-		.each(function (d) { this._current - d; }) // creates a smooth animation for each track
+		.each(function (d) { this._current - d; }); // creates a smooth animation for each track
 
 	// mouse event handlers are attached to path so they need to come after its definition
 	path.on('mouseover', function (d) {
@@ -155,7 +202,9 @@ const drawChart = function (dataset) {
 			.style('left', (d3.event.layerX + 10) + 'px'); // always 10 px to the right of the mouse
 	});
 
+	// ========================
 	// Defining legend
+	// ========================
 	var legend = svg.selectAll('.legend')  // selecting elements with class 'legend'
 		.data(color.domain()) // refers to an array of names from our dataset
 		.enter() // create placeholder
@@ -165,7 +214,7 @@ const drawChart = function (dataset) {
 			var height = legendRectSize + legendSpacing; // height of element is the height of colored square plus spacing
 			var offset = height * color.domain().length / 2; // vertical offset of the entire legend = height of a single element & half the total number of elements
 			var horz = 18 * legendRectSize; // the legend is shifted to the left to make room for the text
-			var vert = i * height - offset; // the top of the element is shifted up or down from the center using the offset defiend earlier and the index of the current element 'i' 
+			var vert = i * height - offset; // the top of the element is shifted up or down from the center using the offset defined earlier and the index of the current element 'i' 
 			return 'translate(' + horz + ',' + vert + ')'; //return translation
 		});
 
@@ -182,5 +231,9 @@ const drawChart = function (dataset) {
 		.attr('y', legendRectSize - legendSpacing)
 		.text(function (d) { return d; });
 };
+
+
+
+
 
 

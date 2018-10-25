@@ -249,3 +249,4 @@ func postJSON(url string, jsonValue []uint8) *http.Response {
 // https://www.willmaster.com/library/manage-forms/form-disappears-immediately-when-button-is-clicked.php
 // https://stackoverflow.com/questions/34839811/how-to-retrieve-form-data-as-array-in-golang
 // https://docs.npmjs.com/getting-started/uninstalling-local-packages
+// http://bl.ocks.org/d3noob/7030f35b72de721622b8
